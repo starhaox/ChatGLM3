@@ -14,8 +14,9 @@ import os
 import streamlit as st
 import torch
 from transformers import AutoModel, AutoTokenizer
-
-MODEL_PATH = os.environ.get('MODEL_PATH', 'THUDM/chatglm3-6b')
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+#MODEL_PATH = os.environ.get('MODEL_PATH', 'THUDM/chatglm3-6b')
+MODEL_PATH = os.environ.get('MODEL_PATH', 'THUDM/chatglm3-6b-128k')
 TOKENIZER_PATH = os.environ.get("TOKENIZER_PATH", MODEL_PATH)
 
 st.set_page_config(
