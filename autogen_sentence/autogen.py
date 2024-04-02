@@ -36,16 +36,29 @@ for row in range(10,sheet.max_row + 1):
     sheet_new = wb_new.active
     sheet_new.title = str(row-9)
     past_key_values, history = None, []
+    sentences = cellS.value.split("。")
     for i in range(cnt):
         current_length = 0
         article = ""
-        for response, history, past_key_values in model.stream_chat(tokenizer, query, history=history, top_p=1,
-                                                                    temperature=0.8,
-                                                                    past_key_values=past_key_values,
-                                                                    return_past_key_values=True):
-            print(response[current_length:], end="", flush=True)
-            current_length = len(response)
-            article = response
+        for s in sentences:
+            if not s: continue
+            query = "我给你发一段话，你保持原来的意思不变，帮我去润色一下啊，润色的长度和原来的差不多。 下面是你要润色的文本：" + s
+            print(s)
+            current_length = 0
+            sentence = ""
+            for response, history, past_key_values in model.stream_chat(tokenizer, query, history=history, top_p=1,
+                                                                        temperature=0.8,
+                                                                        past_key_values=past_key_values,
+                                                                        return_past_key_values=True):
+                print(response[current_length:], end="", flush=True)
+                current_length = len(response)
+                sentence = response
+            if article and not article.endswith("。"):
+                article = article + "。"
+            if sentence.startswith(prefix):
+                sentence = sentence[len(prefix):]
+            article = article + sentence
+
         sheet_new['A'+str(i+1)] = article
         print()
-        wb_new.save('C:\\Users\\Administrator\\Desktop\\本地大模型\\爆款文案批量生成器\\爆款文案_2024_新文案_'+str(row-9)+'.xlsx')
+        wb_new.save('C:\\Users\\Administrator\\Desktop\\本地大模型\\爆款文案批量生成器\\爆款文案_2024_新文案_句级_'+str(row-9)+'.xlsx')
