@@ -34,6 +34,8 @@ from transformers import DataCollatorForSeq2Seq as _DataCollatorForSeq2Seq
 
 from transformers import Seq2SeqTrainer as _Seq2SeqTrainer
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+
 ModelType = Union[PreTrainedModel, PeftModelForCausalLM]
 TokenizerType = Union[PreTrainedTokenizer, PreTrainedTokenizerFast]
 app = typer.Typer(pretty_exceptions_show_locals=False)

@@ -1,0 +1,1 @@
+start powershell autogen.ps1
