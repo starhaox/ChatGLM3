@@ -4,6 +4,7 @@ import os
 
 from openpyxl.workbook import Workbook
 from transformers import AutoTokenizer, AutoModel
+from randomgen import randomgenarticles
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 MODEL_PATH = os.environ.get('MODEL_PATH', 'THUDM/chatglm3-6b-128k')
@@ -80,3 +81,4 @@ for row in range(10,sheet.max_row + 1):
         wb_new.save(
             '爆款文案_2024_新文案_句级_' + str(
                 row - 9) + '.xlsx')
+randomgenarticles()
