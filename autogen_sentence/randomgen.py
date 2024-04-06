@@ -15,8 +15,9 @@ sheet=wb.active
 #print(sheet.max_column)
 rows = [[""] for i in range(sheet.max_column+1)]
 #print(len(rows))
+offset = 8
 for col in range(1, sheet.max_column + 1):
-    for row in range(1, sheet.max_row + 1):
+    for row in range(offset, sheet.max_row + 1):
         v = sheet.cell(row=row, column=col).value
         rows[col].append(v)
         #print(v)
@@ -24,7 +25,7 @@ for col in range(1, sheet.max_column + 1):
 dest = 10000
 articles = []
 mx_c = sheet.max_column
-mx_r = sheet.max_row
+mx_r = sheet.max_row-offset+1
 for i in range(dest):
     article = ""
     for j in range(1, mx_c+1):
