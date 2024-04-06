@@ -27,6 +27,7 @@ cnt = sheet['B2'].value
 if not cnt:
     cnt = int(cnt)
 print("将每条自动生成"+str(cnt)+"条")
+offset = 8
 for row in range(10,sheet.max_row + 1):
     cellS=sheet.cell(row=row,column=2)
     if cellS.value:
@@ -36,6 +37,8 @@ for row in range(10,sheet.max_row + 1):
     wb_new = Workbook()
     sheet_new = wb_new.active
     sheet_new.title = str(row-9)
+    sheet_new.cell(row=2, column=1).value = sheet.cell(row=3,column=1).value
+    sheet_new.cell(row=2, column=2).value = sheet.cell(row=3, column=2).value
     past_key_values, history = None, []
     sentences = cellS.value.split("。")
     for i in range(cnt):
@@ -54,12 +57,23 @@ for row in range(10,sheet.max_row + 1):
                 print(response[current_length:], end="", flush=True)
                 current_length = len(response)
                 sentence = response
-            cell = sheet_new.cell(row=i+1, column=j+1)
-            cell.value = sentence
             # if article and not article.endswith("。"):
             #     article = article + "。"
             #article = article + sentence
-
+            #need do autoremove here
+            print("remove before:"+sentence)
+            if "润色" in sentence:
+                if ":" in sentence:
+                    v = sentence.split(":")
+                    if "润色" in v[0]:
+                        sentence = sentence[len(v[0])+1:]
+                elif "：" in sentence:
+                    v = sentence.split("：")
+                    if "润色" in v[0]:
+                        sentence = sentence[len(v[0]) + 1:]
+            print("remove after:" + sentence)
+            cell = sheet_new.cell(row=i+offset, column=j+1)
+            cell.value = sentence
         #sheet_new['A'+str(i+1)] = article
         print()
         #wb_new.save('C:\\Users\\Administrator\\Desktop\\本地大模型\\爆款文案批量生成器\\爆款文案_2024_新文案_句级_'+str(row-9)+'.xlsx')
