@@ -6,7 +6,7 @@ import openpyxl
 import os
 
 from openpyxl.workbook import Workbook
-def randomgenarticles(path):
+def randomgenarticles(path, count):
     #wb=openpyxl.load_workbook("C:\\Users\\Administrator\\Desktop\\本地大模型\\爆款文案批量生成器\\爆款文案_2024.xlsx")
     #path = "爆款文案_2024_新文案_句级_1.xlsx"
     wb=openpyxl.load_workbook(path)
@@ -23,7 +23,7 @@ def randomgenarticles(path):
             rows[col].append(v)
             #print(v)
         #print("next col")
-    dest = 10000
+    dest = count
     articles = []
     mx_c = sheet.max_column
     mx_r = sheet.max_row-offset+1
@@ -32,7 +32,7 @@ def randomgenarticles(path):
         for j in range(1, mx_c+1):
             idx = random.randint(1, mx_r)
             article = article+rows[j][idx]
-        print(str(i)+":"+article)
+        print(str(i+1)+":"+article)
         articles.append(article)
     #print(articles)
     wb_new = Workbook()
@@ -46,5 +46,6 @@ def randomgenarticles(path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--path", type=str, default="/home/liuge/Desktop/本地大模型/爆款文案_2024_新文案_句级_1.xlsx")
+    parser.add_argument("--count", type=int, default=10000)
     args = parser.parse_args()
-    randomgenarticles(args.path)
+    randomgenarticles(args.path, args.count)

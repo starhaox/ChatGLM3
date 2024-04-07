@@ -27,7 +27,11 @@ print(phrase)
 cnt = sheet['B2'].value
 if not cnt:
     cnt = int(cnt)
+count = sheet['B3'].value
+if not count:
+    count = int(count)
 print("将每条自动生成"+str(cnt)+"条")
+print("将每条自动生成"+str(count)+"条文案")
 offset = 8
 for row in range(10,sheet.max_row + 1):
     cellS=sheet.cell(row=row,column=2)
@@ -81,4 +85,4 @@ for row in range(10,sheet.max_row + 1):
     path = '/home/liuge/Desktop/本地大模型/爆款文案_2024_新文案_句级_' + str(
             row - 9) + '.xlsx'
     wb_new.save(path)
-    randomgenarticles(path)
+    randomgenarticles(path, count)
