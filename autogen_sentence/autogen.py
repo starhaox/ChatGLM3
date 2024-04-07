@@ -14,7 +14,7 @@ tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_PATH, trust_remote_code=True
 model = AutoModel.from_pretrained(MODEL_PATH, trust_remote_code=True, device_map="auto").eval()
 
 #wb=openpyxl.load_workbook("C:\\Users\\Administrator\\Desktop\\本地大模型\\爆款文案批量生成器\\爆款文案_2024.xlsx")
-wb=openpyxl.load_workbook("爆款文案_2024.xlsx")
+wb=openpyxl.load_workbook("/home/liuge/Desktop/本地大模型/爆款文案_2024.xlsx")
 sheet=wb["爆款文案_2024"]
 sheet_phrase=wb["吸睛话术"]
 phrase=""
@@ -78,7 +78,7 @@ for row in range(10,sheet.max_row + 1):
         #sheet_new['A'+str(i+1)] = article
         print()
         #wb_new.save('C:\\Users\\Administrator\\Desktop\\本地大模型\\爆款文案批量生成器\\爆款文案_2024_新文案_句级_'+str(row-9)+'.xlsx')
-        wb_new.save(
-            '爆款文案_2024_新文案_句级_' + str(
-                row - 9) + '.xlsx')
-randomgenarticles()
+    path = '/home/liuge/Desktop/本地大模型/爆款文案_2024_新文案_句级_' + str(
+            row - 9) + '.xlsx'
+    wb_new.save(path)
+    randomgenarticles(path)

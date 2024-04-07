@@ -1,14 +1,15 @@
+import sys
 import random
-
+import argparse
 import pandas as pd
 import openpyxl
 import os
 
 from openpyxl.workbook import Workbook
-def randomgenarticles():
+def randomgenarticles(path):
     #wb=openpyxl.load_workbook("C:\\Users\\Administrator\\Desktop\\本地大模型\\爆款文案批量生成器\\爆款文案_2024.xlsx")
-    nm = "爆款文案_2024_新文案_句级_2.xlsx"
-    wb=openpyxl.load_workbook(nm)
+    #path = "爆款文案_2024_新文案_句级_1.xlsx"
+    wb=openpyxl.load_workbook(path)
     sheet=wb.active
     # wb_new = Workbook()
     # sheet_new = wb_new.active
@@ -39,8 +40,11 @@ def randomgenarticles():
     for i in range(len(articles)):
         cell = sheet_new.cell(row=i + 1, column=1)
         cell.value = articles[i]
-    wb_new.save(nm[:-5] +'_random.xlsx')
+    wb_new.save(path[:-5] +'_random.xlsx')
 
 
 if __name__ == "__main__":
-    randomgenarticles()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--path", type=str, default="/home/liuge/Desktop/本地大模型/爆款文案_2024_新文案_句级_1.xlsx")
+    args = parser.parse_args()
+    randomgenarticles(args.path)
